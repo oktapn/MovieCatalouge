@@ -43,7 +43,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
         viewModel = ViewModelProviders.of(this).get(DetailMovieViewModel.class);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -113,7 +113,7 @@ public class DetailMovieActivity extends AppCompatActivity {
 //        CourseEntity courseEntity = DataDummy.getCourse(courseId);
         textTitle.setText(courseEntity.getTitle());
         textDesc.setText(courseEntity.getDescription());
-        textDate.setText(String.format("Deadline %s", courseEntity.getDate()));
+        textDate.setText(String.format("Released %s", courseEntity.getDate()));
 
         GlideApp.with(getApplicationContext())
                 .load(courseEntity.getImagePath())

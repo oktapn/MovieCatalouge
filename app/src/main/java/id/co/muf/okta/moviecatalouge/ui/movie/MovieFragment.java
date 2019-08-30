@@ -59,7 +59,7 @@ public class MovieFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             viewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-            movies = viewModel.getCourses();
+            movies = viewModel.getMovies();
             moviesAdapter = new MovieAdapter(getActivity());
             moviesAdapter.setListMovies(movies);
             rvMovie.setLayoutManager(new LinearLayoutManager(getContext()));

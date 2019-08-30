@@ -9,7 +9,7 @@ import id.co.muf.okta.moviecatalouge.utils.DataDummy;
 
 public class MovieViewModel extends ViewModel {
 
-    public List<MovieEntity> getCourses() {
+    public List<MovieEntity> getMovies() {
         return DataDummy.generateDummyMovies();
     }
 
