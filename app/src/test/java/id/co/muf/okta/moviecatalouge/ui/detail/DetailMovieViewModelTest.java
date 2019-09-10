@@ -1,60 +1,52 @@
 package id.co.muf.okta.moviecatalouge.ui.detail;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
-import id.co.muf.okta.moviecatalouge.R;
-import id.co.muf.okta.moviecatalouge.data.MovieEntity;
-import id.co.muf.okta.moviecatalouge.data.TvShowEntity;
 
-import static org.junit.Assert.*;
+import id.co.muf.okta.moviecatalouge.data.MovieEntity;
+import id.co.muf.okta.moviecatalouge.data.source.MovieRepository;
+import id.co.muf.okta.moviecatalouge.utils.FakeDataDummy;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class DetailMovieViewModelTest {
+
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
     private DetailMovieViewModel viewModel;
-    private MovieEntity dummyMovie;
-    private TvShowEntity dummyTvshow;
+    private MovieRepository movieRepository = mock(MovieRepository.class);
+    private MovieEntity dummyMovie = FakeDataDummy.generateDummyMovies().get(0);
+    private String imageId = dummyMovie.getImageId();
+
 
     @Before
-    public void setUp() throws Exception {
-        viewModel = new DetailMovieViewModel();
-        dummyMovie = new MovieEntity("m10",
-                "Mortal Engines",
-                "Many thousands of years in the future, Earth’s cities roam the globe on huge wheels, devouring each other in a struggle for ever diminishing resources. On one of these massive traction cities, the old London, Tom Natsworthy has an unexpected encounter with a mysterious young woman from the wastelands who will change the course of his life forever.",
-                "2019",
-                false,
-                R.drawable.poster_mortal_engines);
-        dummyTvshow = new TvShowEntity("t01",
-                "Arrow",
-                "Spoiled billionaire playboy Oliver Queen is missing and presumed dead when his yacht is lost at sea. He returns five years later a changed man, determined to clean up the city as a hooded vigilante armed with a bow.",
-                "2012",
-                false,
-                R.drawable.poster_arrow);
+    public void setUp() {
+        viewModel = new DetailMovieViewModel(movieRepository);
+        viewModel.setMovieid(imageId);
     }
 
     @Test
     public void getMovie() {
-        viewModel.setMovieid(dummyMovie.getImageId());
-        MovieEntity courseEntity = viewModel.getMovie();
-        assertNotNull(courseEntity);
-        assertEquals(dummyMovie.getImageId(), courseEntity.getImageId());
-        assertEquals(dummyMovie.getDate(), courseEntity.getDate());
-        assertEquals(dummyMovie.getDescription(), courseEntity.getDescription());
-        assertEquals(dummyMovie.getImagePath(), courseEntity.getImagePath());
-        assertEquals(dummyMovie.getTitle(), courseEntity.getTitle());
+        MutableLiveData<MovieEntity> moviesEntities = new MutableLiveData<>();
+        moviesEntities.setValue(dummyMovie);
+
+        when(movieRepository.getMovieDetail(imageId)).thenReturn(moviesEntities);
+
+        Observer<MovieEntity> observer = mock(Observer.class);
+
+        viewModel.getMovie().observeForever(observer);
+
+        verify(observer).onChanged(dummyMovie);
+
     }
-
-
-    @Test
-    public void getTvShow() {
-        viewModel.setTvShowid(dummyTvshow.getImageId());
-        TvShowEntity tvShowEntity = viewModel.getTvShow();
-        assertNotNull(tvShowEntity);
-        assertEquals(dummyTvshow.getImageId(), tvShowEntity.getImageId());
-        assertEquals(dummyTvshow.getDate(), tvShowEntity.getDate());
-        assertEquals(dummyTvshow.getDescription(), tvShowEntity.getDescription());
-        assertEquals(dummyTvshow.getImagePath(), tvShowEntity.getImagePath());
-        assertEquals(dummyTvshow.getTitle(), tvShowEntity.getTitle());
-    }
-
 
 }

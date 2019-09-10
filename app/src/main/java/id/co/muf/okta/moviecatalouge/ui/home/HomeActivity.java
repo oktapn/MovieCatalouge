@@ -34,10 +34,10 @@ public class HomeActivity extends AppCompatActivity {
         initialiseViews();
         setUpTabLayout();
         Toolbar mTopToolbar = findViewById(R.id.toolbar);
-//        mTopToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(mTopToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        setActionBarTitle("MOVIE CATALOUGE");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
     }
 
     public void initialiseViews() {
