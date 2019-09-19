@@ -2,6 +2,9 @@ package id.co.muf.okta.moviecatalouge.data.source.remote;
 
 import android.os.Handler;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.List;
 
 import id.co.muf.okta.moviecatalouge.data.source.remote.response.MovieResponse;
@@ -25,34 +28,48 @@ public class RemoteRepository {
         return INSTANCE;
     }
 
-    public void getAllMovies(LoadMoviesCallback callback) {
+    public LiveData<ApiResponse<List<MovieResponse>>> getAllMoviesAsLiveData() {
+        EspressoIdlingResource.increment();
+        MutableLiveData<ApiResponse<List<MovieResponse>>> resultCourse = new MutableLiveData<>();
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            resultCourse.setValue(ApiResponse.success(jsonHelper.loadMovies()));
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow()) {
+                EspressoIdlingResource.decrement();
+            }
+        }, SERVICE_LATENCY_IN_MILLIS);
+
+        return resultCourse;
+    }
+
+    public LiveData<ApiResponse<List<TvshowResponse>>> getAllTvshowsAsLiveData() {
+        EspressoIdlingResource.increment();
+        MutableLiveData<ApiResponse<List<TvshowResponse>>> resultCourse = new MutableLiveData<>();
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            resultCourse.setValue(ApiResponse.success(jsonHelper.loadTvshows()));
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow()) {
+                EspressoIdlingResource.decrement();
+            }
+        }, SERVICE_LATENCY_IN_MILLIS);
+
+        return resultCourse;
+    }
+
+    public LiveData<ApiResponse<List<MovieResponse>>> getAllMovieDetailAsLiveData() {
+        MutableLiveData<ApiResponse<List<MovieResponse>>> resultCourse = new MutableLiveData<>();
+
         EspressoIdlingResource.increment();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            callback.onAllMoviesReceived(jsonHelper.loadMovies());
-            EspressoIdlingResource.decrement();
+            resultCourse.setValue(ApiResponse.success(jsonHelper.loadMovies()));
+//            callback.onAllMoviesReceived(jsonHelper.loadMovies());
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow()) {
+                EspressoIdlingResource.decrement();
+            }
         }, SERVICE_LATENCY_IN_MILLIS);
+        return resultCourse;
     }
-
-    public void getAllTvshows(LoadTvshowsCallback callback) {
-        EspressoIdlingResource.increment();
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            callback.onAllTvshowsReceived(jsonHelper.loadTvshows());
-            EspressoIdlingResource.decrement();
-        }, SERVICE_LATENCY_IN_MILLIS);
-    }
-
-    public interface LoadMoviesCallback {
-        void onAllMoviesReceived(List<MovieResponse> courseResponses);
-
-        void onDataNotAvailable();
-    }
-
-    public interface LoadTvshowsCallback {
-        void onAllTvshowsReceived(List<TvshowResponse> moduleResponses);
-
-        void onDataNotAvailable();
-    }
-
 }

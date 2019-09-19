@@ -9,9 +9,10 @@ import org.junit.Rule;
 import org.junit.Test;
 
 
-import id.co.muf.okta.moviecatalouge.data.MovieEntity;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.MovieEntity;
 import id.co.muf.okta.moviecatalouge.data.source.MovieRepository;
 import id.co.muf.okta.moviecatalouge.utils.FakeDataDummy;
+import id.co.muf.okta.moviecatalouge.vo.Resource;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -31,21 +32,33 @@ public class DetailMovieViewModelTest {
     @Before
     public void setUp() {
         viewModel = new DetailMovieViewModel(movieRepository);
-        viewModel.setMovieid(imageId);
+        viewModel.setMovieId(imageId);
     }
 
     @Test
     public void getMovie() {
-        MutableLiveData<MovieEntity> moviesEntities = new MutableLiveData<>();
-        moviesEntities.setValue(dummyMovie);
 
-        when(movieRepository.getMovieDetail(imageId)).thenReturn(moviesEntities);
+        Resource<MovieEntity> resource = Resource.success(FakeDataDummy.generateDummyMovies().get(0));
+        MutableLiveData<Resource<MovieEntity>> courseEntities = new MutableLiveData<>();
+        courseEntities.setValue(resource);
 
-        Observer<MovieEntity> observer = mock(Observer.class);
+        when(movieRepository.getMovieDetail(imageId)).thenReturn(courseEntities);
 
-        viewModel.getMovie().observeForever(observer);
+        Observer<Resource<MovieEntity>> observer = mock(Observer.class);
+        viewModel.movie.observeForever(observer);
 
-        verify(observer).onChanged(dummyMovie);
+        verify(observer).onChanged(resource);
+
+//        MutableLiveData<MovieEntity> moviesEntities = new MutableLiveData<>();
+//        moviesEntities.setValue(dummyMovie);
+//
+//        when(movieRepository.getMovieDetail(imageId)).thenReturn(moviesEntities);
+//
+//        Observer<MovieEntity> observer = mock(Observer.class);
+//
+//        viewModel.getMovie().observeForever(observer);
+//
+//        verify(observer).onChanged(dummyMovie);
 
     }
 

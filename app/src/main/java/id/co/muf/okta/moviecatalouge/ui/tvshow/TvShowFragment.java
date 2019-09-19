@@ -20,7 +20,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import id.co.muf.okta.moviecatalouge.R;
-import id.co.muf.okta.moviecatalouge.data.TvShowEntity;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.TvShowEntity;
 import id.co.muf.okta.moviecatalouge.viewmodel.ViewModelFactory;
 
 /**
@@ -31,9 +31,6 @@ public class TvShowFragment extends Fragment {
     private RecyclerView rvTvShow;
     private ProgressBar progressBar;
     private TvShowAdapter tvShowAdapter;
-
-    private TvShowViewModel viewModel;
-    private List<TvShowEntity> tvShows;
 
     public TvShowFragment() {
         // Required empty public constructor
@@ -59,12 +56,24 @@ public class TvShowFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             progressBar.setVisibility(View.VISIBLE);
-            viewModel = obtainViewModel(getActivity());
+            TvShowViewModel viewModel = obtainViewModel(getActivity());
             tvShowAdapter = new TvShowAdapter(getActivity());
-            viewModel.getTVshow().observe(this, tvshows -> {
-                progressBar.setVisibility(View.GONE);
-                tvShowAdapter.setListTvShow(tvshows);
-                tvShowAdapter.notifyDataSetChanged();
+            viewModel.getTvshow().observe(this, tvshow -> {
+                if (tvshow != null) {
+                    switch (tvshow.status) {
+                        case LOADING:
+                            progressBar.setVisibility(View.VISIBLE);
+                            break;
+                        case SUCCESS:
+                            progressBar.setVisibility(View.GONE);
+                            tvShowAdapter.setListTvShow(tvshow.data);
+                            tvShowAdapter.notifyDataSetChanged();
+                        case ERROR:
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
             });
             rvTvShow.setLayoutManager(new LinearLayoutManager(getContext()));
             rvTvShow.setHasFixedSize(true);

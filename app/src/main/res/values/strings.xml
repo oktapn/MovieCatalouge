@@ -3,11 +3,19 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="action_settings">Setting</string>
+    <string name="action_favorites">Favorites</string>
     <string name="released">Released</string>
     <string name="title">title</string>
+    <string name="title_activity_detail_movie">DetailMovieActivity</string>
     <string name="description">description</string>
     <string name="description_movie">Deskripsi</string>
     <string name="list_module">List Clip</string>
     <string name="date">date</string>
     <string name="imagemovie">imageMovie</string>
+    <string name="message_undo">Batalkan menghapus item sebelumnya?</string>
+    <string name="message_ok">OK</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_favorites">favorites</string>
 </resources>

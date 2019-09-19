@@ -2,9 +2,8 @@ package id.co.muf.okta.moviecatalouge.utils;
 
 import java.util.ArrayList;
 
-import id.co.muf.okta.moviecatalouge.R;
-import id.co.muf.okta.moviecatalouge.data.MovieEntity;
-import id.co.muf.okta.moviecatalouge.data.TvShowEntity;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.MovieEntity;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.TvShowEntity;
 import id.co.muf.okta.moviecatalouge.data.source.remote.response.MovieResponse;
 import id.co.muf.okta.moviecatalouge.data.source.remote.response.TvshowResponse;
 

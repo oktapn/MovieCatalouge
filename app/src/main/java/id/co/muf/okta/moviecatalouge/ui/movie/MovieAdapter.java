@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.co.muf.okta.moviecatalouge.R;
-import id.co.muf.okta.moviecatalouge.data.MovieEntity;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.MovieEntity;
 import id.co.muf.okta.moviecatalouge.ui.detail.DetailMovieActivity;
 import id.co.muf.okta.moviecatalouge.utils.GlideApp;
 

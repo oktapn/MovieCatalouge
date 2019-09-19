@@ -15,11 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import java.util.List;
 
 import id.co.muf.okta.moviecatalouge.R;
-import id.co.muf.okta.moviecatalouge.data.MovieEntity;
 import id.co.muf.okta.moviecatalouge.viewmodel.ViewModelFactory;
 
 /**
@@ -31,15 +30,8 @@ public class MovieFragment extends Fragment {
     private ProgressBar progressBar;
     private MovieAdapter moviesAdapter;
 
-    private MovieViewModel viewModel;
-    private List<MovieEntity> movies;
-
     public MovieFragment() {
         // Required empty public constructor
-    }
-
-    public static Fragment newInstance() {
-        return new MovieFragment();
     }
 
 
@@ -62,14 +54,28 @@ public class MovieFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             progressBar.setVisibility(View.VISIBLE);
-            viewModel = obtainViewModel(getActivity());
+            MovieViewModel viewModel = obtainViewModel(getActivity());
             moviesAdapter = new MovieAdapter(getActivity());
-            viewModel.getMovies().observe(this, movies -> {
-                progressBar.setVisibility(View.GONE);
-                moviesAdapter.setListMovies(movies);
-                moviesAdapter.notifyDataSetChanged();
+            viewModel.getMovie().observe(this, movies -> {
+                if (movies != null) {
+                    switch (movies.status) {
+                        case LOADING:
+                            progressBar.setVisibility(View.VISIBLE);
+                            break;
+                        case SUCCESS:
+                            progressBar.setVisibility(View.GONE);
+                            moviesAdapter.setListMovies(movies.data);
+                            moviesAdapter.notifyDataSetChanged();
+                            break;
+                        case ERROR:
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            break;
+
+                    }
+                }
             });
-            moviesAdapter.setListMovies(movies);
+//            moviesAdapter.setListMovies(movies);
             rvMovie.setLayoutManager(new LinearLayoutManager(getContext()));
             rvMovie.setHasFixedSize(true);
             rvMovie.setAdapter(moviesAdapter);

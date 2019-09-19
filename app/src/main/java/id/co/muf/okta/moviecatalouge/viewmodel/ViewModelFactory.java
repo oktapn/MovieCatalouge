@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 import id.co.muf.okta.moviecatalouge.data.source.MovieRepository;
 import id.co.muf.okta.moviecatalouge.di.Injection;
 import id.co.muf.okta.moviecatalouge.ui.detail.DetailMovieViewModel;
+import id.co.muf.okta.moviecatalouge.ui.favorites.favoritedmovie.FavoritedMovieViewModel;
+import id.co.muf.okta.moviecatalouge.ui.favorites.favoritedtvshow.FavoritedTvshowViewModel;
 import id.co.muf.okta.moviecatalouge.ui.movie.MovieViewModel;
 import id.co.muf.okta.moviecatalouge.ui.tvshow.TvShowViewModel;
 
@@ -45,6 +47,12 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         } else if (modelClass.isAssignableFrom(TvShowViewModel.class)) {
             //noinspection unchecked
             return (T) new TvShowViewModel(movieRepository);
+        } else if (modelClass.isAssignableFrom(FavoritedMovieViewModel.class)) {
+            //noinspection unchecked
+            return (T) new FavoritedMovieViewModel(movieRepository);
+        } else if (modelClass.isAssignableFrom(FavoritedTvshowViewModel.class)) {
+            //noinspection unchecked
+            return (T) new FavoritedTvshowViewModel(movieRepository);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

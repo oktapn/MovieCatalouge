@@ -11,11 +11,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.co.muf.okta.moviecatalouge.data.TvShowEntity;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.MovieEntity;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.TvShowEntity;
 import id.co.muf.okta.moviecatalouge.data.source.MovieRepository;
 import id.co.muf.okta.moviecatalouge.utils.FakeDataDummy;
+import id.co.muf.okta.moviecatalouge.vo.Resource;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,18 +37,30 @@ public class TvShowViewModelTest {
 
     @Test
     public void getTvShow() {
-        ArrayList<TvShowEntity> dummyTvshows = FakeDataDummy.generateDummyTvShow();
 
-        MutableLiveData<List<TvShowEntity>> tvshows = new MutableLiveData<>();
-        tvshows.setValue(dummyTvshows);
+        Resource<List<TvShowEntity>> resource = Resource.success(FakeDataDummy.generateDummyTvShow());
+        MutableLiveData<Resource<List<TvShowEntity>>> dummyTvshows = new MutableLiveData<>();
+        dummyTvshows.setValue(resource);
 
-        when(movieRepository.getAllTvShows()).thenReturn(tvshows);
+        when(movieRepository.getAllTvShows()).thenReturn(dummyTvshows);
 
-        Observer<List<TvShowEntity>> observer = mock(Observer.class);
+        Observer<Resource<List<TvShowEntity>>> observer = mock(Observer.class);
 
-        viewModel.getTVshow().observeForever(observer);
+        viewModel.getTvshow().observeForever(observer);
 
-        verify(observer).onChanged(dummyTvshows);
+        verify(observer).onChanged(resource);
+//        ArrayList<TvShowEntity> dummyTvshows = FakeDataDummy.generateDummyTvShow();
+//
+//        MutableLiveData<List<TvShowEntity>> tvshows = new MutableLiveData<>();
+//        tvshows.setValue(dummyTvshows);
+//
+//        when(movieRepository.getAllTvShows()).thenReturn(tvshows);
+//
+//        Observer<List<TvShowEntity>> observer = mock(Observer.class);
+//
+//        viewModel.getTVshow().observeForever(observer);
+//
+//        verify(observer).onChanged(dummyTvshows);
     }
 
 }

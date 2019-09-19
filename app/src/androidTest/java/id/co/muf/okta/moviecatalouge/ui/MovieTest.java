@@ -16,6 +16,7 @@ import id.co.muf.okta.moviecatalouge.utils.EspressoIdlingResource;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -37,7 +38,17 @@ public class MovieTest {
     @Test
     public void toDetailActivityTest() {
         onView(withId(R.id.rv_movie)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-
         onView(withId(R.id.text_title)).check(matches(withText("Alita")));
+        onView(withId(R.id.action_favorites)).check(matches(isDisplayed()));
+        onView(withId(R.id.action_favorites)).perform(click());
+
+    }
+
+    @Test
+    public void toDetailActivityFavoriteTest() {
+        onView(withId(R.id.action_favorites)).check(matches(isDisplayed()));
+        onView(withId(R.id.action_favorites)).perform(click());
+        onView(withId(R.id.rv_movie_fav)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.text_title)).check(matches(isDisplayed()));
     }
 }

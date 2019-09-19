@@ -13,7 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import id.co.muf.okta.moviecatalouge.R;
-import id.co.muf.okta.moviecatalouge.data.MovieEntity;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.MovieEntity;
 import id.co.muf.okta.moviecatalouge.utils.EspressoIdlingResource;
 import id.co.muf.okta.moviecatalouge.utils.FakeDataDummy;
 

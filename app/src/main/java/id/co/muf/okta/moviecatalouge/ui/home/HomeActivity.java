@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.co.muf.okta.moviecatalouge.R;
+import id.co.muf.okta.moviecatalouge.ui.favorites.FavoritesActivity;
 import id.co.muf.okta.moviecatalouge.ui.movie.MovieFragment;
 import id.co.muf.okta.moviecatalouge.ui.tvshow.TvShowFragment;
 
@@ -36,7 +37,9 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar mTopToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mTopToolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            setActionBarTitle("Movie Catalouge");
+            mTopToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         }
     }
 
@@ -44,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
     }
+
     private void setUpTabLayout() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.add(new MovieFragment(), "Movie");
@@ -109,9 +113,9 @@ public class HomeActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-//            Intent aboutIntent = new Intent(this, AboutActivity.class);
-//            startActivity(aboutIntent);
+        if (id == R.id.action_favorites) {
+            Intent aboutIntent = new Intent(this, FavoritesActivity.class);
+            startActivity(aboutIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);

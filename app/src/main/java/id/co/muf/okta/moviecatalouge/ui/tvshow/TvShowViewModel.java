@@ -1,14 +1,13 @@
 package id.co.muf.okta.moviecatalouge.ui.tvshow;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import id.co.muf.okta.moviecatalouge.data.TvShowEntity;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.TvShowEntity;
 import id.co.muf.okta.moviecatalouge.data.source.MovieRepository;
+import id.co.muf.okta.moviecatalouge.vo.Resource;
 
 public class TvShowViewModel extends ViewModel {
     private MovieRepository movieRepository;
@@ -17,7 +16,7 @@ public class TvShowViewModel extends ViewModel {
         this.movieRepository = movieRepository;
     }
 
-    LiveData<List<TvShowEntity>> getTVshow() {
+    LiveData<Resource<List<TvShowEntity>>> getTvshow() {
         return movieRepository.getAllTvShows();
     }
 
