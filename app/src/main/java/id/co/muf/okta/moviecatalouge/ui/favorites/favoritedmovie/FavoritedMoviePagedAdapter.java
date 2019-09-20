@@ -69,6 +69,11 @@ public class FavoritedMoviePagedAdapter extends PagedListAdapter<MovieEntity, Fa
                 }
             };
 
+    @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
+
     MovieEntity getItemById(int swipedPosition) {
         return getItem(swipedPosition);
     }

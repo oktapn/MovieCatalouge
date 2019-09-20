@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,8 +22,6 @@ import id.co.muf.okta.moviecatalouge.data.source.local.entity.MovieEntity;
 import id.co.muf.okta.moviecatalouge.data.source.local.entity.TvShowEntity;
 import id.co.muf.okta.moviecatalouge.utils.GlideApp;
 import id.co.muf.okta.moviecatalouge.viewmodel.ViewModelFactory;
-
-import static id.co.muf.okta.moviecatalouge.vo.Status.LOADING;
 
 public class DetailMovieActivity extends AppCompatActivity {
 
