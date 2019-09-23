@@ -2,13 +2,12 @@ package id.co.muf.okta.moviecatalouge.ui.movie;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import id.co.muf.okta.moviecatalouge.data.source.local.entity.MovieEntity;
 import id.co.muf.okta.moviecatalouge.data.source.MovieRepository;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.MovieEntity;
 import id.co.muf.okta.moviecatalouge.vo.Resource;
 
 public class MovieViewModel extends ViewModel {

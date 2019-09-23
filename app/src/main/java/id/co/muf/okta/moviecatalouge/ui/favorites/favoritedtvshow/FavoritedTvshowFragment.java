@@ -2,6 +2,14 @@ package id.co.muf.okta.moviecatalouge.ui.favorites.favoritedtvshow;
 
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,12 +19,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -32,6 +34,8 @@ public class FavoritedTvshowFragment extends Fragment {
 
     private RecyclerView rvMovie;
     private ProgressBar progressBar;
+    private TextView emptyView;
+    private LinearLayout LLview;
     private FavoritedTvshowPagedAdapter adapter;
     private FavoritedTvshowViewModel viewModel;
 
@@ -52,6 +56,8 @@ public class FavoritedTvshowFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvMovie = view.findViewById(R.id.rv_tvshow_fav);
         progressBar = view.findViewById(R.id.progress_bar);
+        emptyView = view.findViewById(R.id.empty_view);
+        LLview = view.findViewById(R.id.LLView);
     }
 
     @Override
@@ -71,6 +77,9 @@ public class FavoritedTvshowFragment extends Fragment {
                             progressBar.setVisibility(View.VISIBLE);
                             break;
                         case SUCCESS:
+                            if (courses.data != null) {
+                                viewdata(courses.data.size());
+                            }
                             progressBar.setVisibility(View.GONE);
                             adapter.submitList(courses.data);
                             adapter.notifyDataSetChanged();
@@ -81,7 +90,6 @@ public class FavoritedTvshowFragment extends Fragment {
                             break;
                     }
                 }
-
             });
 
             rvMovie.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -90,6 +98,18 @@ public class FavoritedTvshowFragment extends Fragment {
             itemTouchHelper.attachToRecyclerView(rvMovie);
         }
 
+    }
+
+    private void viewdata(int size) {
+        if (size > 0) {
+            rvMovie.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+            LLview.setGravity(Gravity.TOP);
+        } else {
+            rvMovie.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+            LLview.setGravity(Gravity.CENTER);
+        }
     }
 
     @NonNull

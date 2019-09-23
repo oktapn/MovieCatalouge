@@ -2,6 +2,14 @@ package id.co.muf.okta.moviecatalouge.ui.favorites.favoritedmovie;
 
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,12 +19,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,6 +33,8 @@ public class FavoritedMovieFragment extends Fragment {
 
     private RecyclerView rvMovie;
     private ProgressBar progressBar;
+    private TextView emptyView;
+    private LinearLayout LLview;
     private FavoritedMoviePagedAdapter adapter;
     FavoritedMovieViewModel viewModel;
 
@@ -51,6 +55,8 @@ public class FavoritedMovieFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvMovie = view.findViewById(R.id.rv_movie_fav);
         progressBar = view.findViewById(R.id.progress_bar);
+        emptyView = view.findViewById(R.id.empty_view);
+        LLview = view.findViewById(R.id.LLView);
     }
 
     @Override
@@ -65,11 +71,15 @@ public class FavoritedMovieFragment extends Fragment {
 
             viewModel.getFAvoriteMoviesPaged().observe(this, courses -> {
                 if (courses != null) {
+
                     switch (courses.status) {
                         case LOADING:
                             progressBar.setVisibility(View.VISIBLE);
                             break;
                         case SUCCESS:
+                            if (courses.data != null) {
+                                viewdata(courses.data.size());
+                            }
                             progressBar.setVisibility(View.GONE);
                             adapter.submitList(courses.data);
                             adapter.notifyDataSetChanged();
@@ -80,15 +90,27 @@ public class FavoritedMovieFragment extends Fragment {
                             break;
                     }
                 }
-
             });
 
             rvMovie.setLayoutManager(new LinearLayoutManager(getContext()));
             rvMovie.setHasFixedSize(true);
             rvMovie.setAdapter(adapter);
             itemTouchHelper.attachToRecyclerView(rvMovie);
+
         }
 
+    }
+
+    private void viewdata(int size) {
+        if (size > 0) {
+            rvMovie.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+            LLview.setGravity(Gravity.TOP);
+        } else {
+            rvMovie.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+            LLview.setGravity(Gravity.CENTER);
+        }
     }
 
     @NonNull

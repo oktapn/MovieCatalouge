@@ -1,10 +1,7 @@
 package id.co.muf.okta.moviecatalouge.data.source;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -238,7 +235,7 @@ public class MovieRepository implements MovieDataSource {
         return new NetworkBoundResource<PagedList<MovieEntity>, List<MovieResponse>>(appExecutors) {
             @Override
             protected LiveData<PagedList<MovieEntity>> loadFromDB() {
-                return new LivePagedListBuilder<>(localRepository.getFavoriteMoviesPaged(),10).build();
+                return new LivePagedListBuilder<>(localRepository.getFavoriteMoviesPaged(), 10).build();
             }
 
             @Override
@@ -263,7 +260,7 @@ public class MovieRepository implements MovieDataSource {
         return new NetworkBoundResource<PagedList<TvShowEntity>, List<MovieResponse>>(appExecutors) {
             @Override
             protected LiveData<PagedList<TvShowEntity>> loadFromDB() {
-                return new LivePagedListBuilder<>(localRepository.getFavoriteTvshowsPaged(),10).build();
+                return new LivePagedListBuilder<>(localRepository.getFavoriteTvshowsPaged(), 10).build();
             }
 
             @Override

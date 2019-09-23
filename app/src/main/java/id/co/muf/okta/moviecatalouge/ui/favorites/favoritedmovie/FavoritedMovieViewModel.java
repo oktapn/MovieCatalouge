@@ -16,7 +16,7 @@ public class FavoritedMovieViewModel extends ViewModel {
         this.movieRepository = movieRepository;
     }
 
-    LiveData<Resource<PagedList<MovieEntity>>> getFAvoriteMoviesPaged(){
+    LiveData<Resource<PagedList<MovieEntity>>> getFAvoriteMoviesPaged() {
         return movieRepository.getFavoriteMoviesPaged();
     }
 

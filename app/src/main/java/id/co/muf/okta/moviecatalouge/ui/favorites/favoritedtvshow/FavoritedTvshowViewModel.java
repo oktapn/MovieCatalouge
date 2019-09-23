@@ -15,7 +15,7 @@ public class FavoritedTvshowViewModel extends ViewModel {
         this.movieRepository = movieRepository;
     }
 
-    LiveData<Resource<PagedList<TvShowEntity>>> getFavoriteTvshowsPaged(){
+    LiveData<Resource<PagedList<TvShowEntity>>> getFavoriteTvshowsPaged() {
         return movieRepository.getFavoriteTvshowsPaged();
     }
 

@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import id.co.muf.okta.moviecatalouge.data.source.MovieRepository;
 import id.co.muf.okta.moviecatalouge.data.source.local.entity.MovieEntity;
 import id.co.muf.okta.moviecatalouge.data.source.local.entity.TvShowEntity;
-import id.co.muf.okta.moviecatalouge.data.source.MovieRepository;
 import id.co.muf.okta.moviecatalouge.vo.Resource;
 
 public class DetailMovieViewModel extends ViewModel {

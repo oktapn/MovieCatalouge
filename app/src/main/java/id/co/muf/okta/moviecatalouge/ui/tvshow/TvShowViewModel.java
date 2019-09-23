@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import id.co.muf.okta.moviecatalouge.data.source.local.entity.TvShowEntity;
 import id.co.muf.okta.moviecatalouge.data.source.MovieRepository;
+import id.co.muf.okta.moviecatalouge.data.source.local.entity.TvShowEntity;
 import id.co.muf.okta.moviecatalouge.vo.Resource;
 
 public class TvShowViewModel extends ViewModel {

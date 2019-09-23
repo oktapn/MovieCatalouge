@@ -58,7 +58,7 @@ public class JsonHelper {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.e("1213",String.valueOf(list.size()));
+        Log.e("1213", String.valueOf(list.size()));
         return list;
     }
 
@@ -88,7 +88,7 @@ public class JsonHelper {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.e("1212",String.valueOf(list.size()));
+        Log.e("1212", String.valueOf(list.size()));
         return list;
     }
 }

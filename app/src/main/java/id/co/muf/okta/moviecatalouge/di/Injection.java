@@ -18,6 +18,6 @@ public class Injection {
         RemoteRepository remoteRepository = RemoteRepository.getInstance(new JsonHelper(application));
         AppExecutors appExecutors = new AppExecutors();
 
-        return MovieRepository.getInstance(localRepository, remoteRepository,appExecutors);
+        return MovieRepository.getInstance(localRepository, remoteRepository, appExecutors);
     }
 }
